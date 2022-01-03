@@ -38,18 +38,12 @@ class RegistrationSerializer(serializers.ModelSerializer):
         )
         user.set_password(validated_data['password'])
         user.save()
-        #if user.is_employee:
-        #    employees = Group.objects.get(name='Employees')
-        #    employees.user_set.add(employees)
-        #    
-        #else:
-        #    owners = Group.objects.get(name="Owners")
-        #    owners.user_set.add(owners)
+
             
 
         return user
 
-# Serializer for registering Employees
+# Serializer for registering Users
 class UserRegistrationSerializer(serializers.ModelSerializer):
     email = serializers.EmailField(required=True, validators=[
                                    UniqueValidator(queryset=User.objects.all())])
@@ -60,8 +54,6 @@ class UserRegistrationSerializer(serializers.ModelSerializer):
     class Meta:
         model = User
         # If added new columns through the User model, add them in the fields
-        # list as seen below
-        # Using existing flag is_staff as "is_owner" to leverage administrative privileges
         fields = ('username', 'password', 'email',
                   'first_name', 'last_name', 'middle_name', 'is_active','officer_id') 
 
