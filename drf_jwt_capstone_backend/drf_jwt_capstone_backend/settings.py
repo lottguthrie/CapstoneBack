@@ -38,9 +38,9 @@ INSTALLED_APPS = [
     'django.contrib.staticfiles',
     'rest_framework',
     'authentication.apps.AuthenticationConfig',
+    'extra.apps.ExtraConfig',
     'officers.apps.OfficerConfig',
     'supervisors.apps.SupervisorConfig',
-    'administration.apps.AdministrationConfig',
     
 ]
 

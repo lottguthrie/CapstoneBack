@@ -2,7 +2,6 @@ from functools import partial
 from django.contrib.auth import get_user_model
 from django.http.response import Http404
 from rest_framework.serializers import Serializer
-from .models import DailyReport, Officers
 from .serializers import OfficersSerializer, DailyReportSerializer
 from rest_framework.views import APIView
 from rest_framework.response import Response
@@ -26,8 +25,8 @@ class Officer(APIView):
 
     def get_users(self):
         try:
-            return Officers.objects.filter(is_active=True)
-        except Officers.DoesNotExist:
+            return Officer.objects.filter(is_active=True)
+        except Officer.DoesNotExist:
             raise Http404
 
     def get_officer(self):
@@ -36,12 +35,12 @@ class Officer(APIView):
 
         officers= self.get_users()
         for officer in officers:
-            officer.append(Officers.objects.get(username= officer.username))
+            officer.append(Officer.objects.get(username= officer.username))
         return officer
             
 
     def get(self, request):
-        officer = Officers.objects.all()
+        officer = Officer.objects.all()
         serializer = OfficersSerializer(officer, many=True)
         return Response(serializer.data)
 
@@ -51,8 +50,8 @@ class GetAllOfficers(APIView):
 
     def get_officer(self, name):
         try:
-            return Officers.objects.filter(username=name)
-        except Officers.DoesNotExist:
+            return Officer.objects.filter(username=name)
+        except Officer.DoesNotExist:
             raise Http404
 
     def get(self, request, name):
@@ -64,8 +63,8 @@ class OfficerData(APIView):
 
     def get_officer(self, pk):
         try:
-            return Officers.objects.get(pk=pk)
-        except Officers.DoesNotExist:
+            return Officer.objects.get(pk=pk)
+        except Officer.DoesNotExist:
             raise Http404
 
     def get(self, request, pk):
@@ -102,12 +101,36 @@ class GetDailyReport(APIView):
         try:
             return DailyReport.objects.filter(username=name)
 
-        except Officers.DoesNotExist:
+        except Officer.DoesNotExist:
             raise Http404
 
     def get(self, request, name):
         all_officers=  self.get_officer(name)
         serializer= DailyReportSerializer(all_officers, many = True)
+        return Response(serializer.data)
+
+
+class DailyReport(APIView):
+
+    def get_users(self):
+        try:
+            return DailyReport.objects.filter(is_active=True)
+        except DailyReport.DoesNotExist:
+            raise Http404
+
+    def get_dailyreport(self):
+
+        dailyreport=[]
+
+        dailyreports= self.get_users()
+        for dailyreport in dailyreports:
+            dailyreport.append(DailyReport.objects.get(username= dailyreport.username))
+        return dailyreport
+            
+
+    def get(self, request):
+        dailyreport = DailyReport.objects.all()
+        serializer = OfficersSerializer(dailyreport, many=True)
         return Response(serializer.data)
 
 

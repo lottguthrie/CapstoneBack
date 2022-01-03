@@ -1,17 +1,10 @@
-from enum import unique
+
 from django.db import models
-from django.db.models.fields.related import ForeignKey
-from django.db.models.deletion import CASCADE
-from django.contrib.auth import get_user_model
-
-from drf_jwt_capstone_backend.officers.views import Officer
-
-User = get_user_model()
 
 # Create your models here.
 
 class Supervisors(models.Model):    
-    supervisor_id = models.ForeignKey(Officer, to_field="supervisor_id", on_delete = models.CASCADE)
+    supervisor_id = models.IntegerField(blank=True, null= True, default=0)
     officer_id = models.IntegerField(blank=True, null= True, default=0)
     last_name = models.CharField(max_length=20, blank=True, null= True)
     first_name = models.CharField(max_length=20, blank=True, null= True)
@@ -23,8 +16,8 @@ class Supervisors(models.Model):
 
 
 class SupervisorReport(models.Model):
-    supervisor_report_id = ForeignKey(Supervisors, to_field="supervisor_report_id", on_delete = models.CASCADE)
-    supervisor_id = models.ForeignKey(Officer, to_field="supervisor_id", on_delete=CASCADE)
+    supervisor_report_id = models.IntegerField(blank=True, null= True, default=0)
+    supervisor_id = models.IntegerField(blank=True, null= True, default=0)
     date = models.DateTimeField(auto_now_add=False)
     total_calls_for_service = models.IntegerField(blank=True, null= True, default=0)
     total_case_numbers_pulled = models.IntegerField(blank=True, null= True, default=0)

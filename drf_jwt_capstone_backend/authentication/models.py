@@ -2,8 +2,6 @@ from django.db import models
 from django.contrib.auth.models import AbstractUser
 from django.db.models.deletion import CASCADE
 
-from drf_jwt_capstone_backend.officers.models import Officers
-
 
 
 # Create your models here.
@@ -15,7 +13,7 @@ from drf_jwt_capstone_backend.officers.models import Officers
 # 2. python manage.py migrate
 
 
-class Officer(AbstractUser):
+class User(AbstractUser):
     # Shared between officers and supervisors
     last_name = models.CharField(max_length=20)    
     
@@ -25,8 +23,7 @@ class Officer(AbstractUser):
     last_name = models.CharField(max_length=50, unique = True, blank= True, null= True)
 
     # Officer fields
-    officer_id = models.ForeignKey(Officers, to_field='last_name', null=True, on_delete=models.CASCADE)
-    
+    officer_id = models.IntegerField(blank=True, null= True, default=0)
 
 
 

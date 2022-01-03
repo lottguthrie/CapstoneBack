@@ -1,7 +1,7 @@
 from functools import partial
 from django.contrib.auth import get_user_model
 from django.http.response import Http404
-from drf_jwt_capstone_backend import supervisors
+
 from rest_framework.serializers import Serializer
 from .models import SupervisorReport, Supervisors
 from .serializers import SupervisorsSerializer, SupervisorReportSerializer

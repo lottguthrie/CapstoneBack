@@ -8,10 +8,10 @@ django = "*"
 djangorestframework = "*"
 djangorestframework-simplejwt = "*"
 django-cors-headers = "*"
-autopep8 = "*"
 mysql-connector-python = "==8.0.26"
 
 [dev-packages]
+autopep8 = "*"
 
 [requires]
 python_version = "3.9"

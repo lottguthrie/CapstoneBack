@@ -10,30 +10,50 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('owners', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='EmployeesWorkSchedule',
+            name='Supervisors',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date_worked', models.DateField()),
-                ('start_time', models.TimeField()),
-                ('end_time', models.TimeField()),
-                ('area_working', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='owners.joblist', to_field='job_name')),
-                ('labor_code', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='owners.employeeroles', to_field='labor_code')),
-                ('username', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, to_field='username')),
+                ('supervisor_id', models.IntegerField(blank=True, null= True, default=0)),
+                ('officer_id', models.IntegerField(blank=True, null= True, default=0)),
+                ('last_name', models.CharField(max_length=20, blank=True, null= True)),
+                ('first_name', models.CharField(max_length=20, blank=True, null= True)),
+                ('middle_name', models.CharField(max_length=20, blank=True, null= True)),
+                ('badge_number', models.IntegerField(blank=True, null= True, default=0)),
+                ('is_active', models.BooleanField(blank=False, null=True))
             ],
         ),
+    
         migrations.CreateModel(
-            name='Employees',
+            name='SupervisorReport',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('vacation_start_date', models.DateField(blank=True, null=True)),
-                ('vacation_end_date', models.DateField(blank=True, null=True)),
-                ('username', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, to_field='username')),
+                ('supervisor_report_id', models.IntegerField(blank=True, null= True, default=0)),
+                ('supervisor_id', models.IntegerField(blank=True, null= True, default=0)),
+                ('date', models.DateTimeField(auto_now_add=False)),
+                ('total_calls_for_service', models.IntegerField(blank=True, null= True, default=0)),
+                ('total_case_numbers_pulled', models.IntegerField(blank=True, null= True, default=0)),
+                ('total_case_numbers_completed', models.IntegerField(blank=True, null= True, default=0)),
+                ('total_reports', models.IntegerField(blank=True, null= True, default=0)),
+                ('total_supplements', models.IntegerField(blank=True, null= True, default=0)),
+                ('total_vehicles_assigned', models.IntegerField(blank=True, null= True, default=0)),
+                ('total_miles_driven', models.IntegerField(blank=True, null= True, default=0)),
+                ('officers_on_road', models.IntegerField(blank=True, null= True, default=0)),
+                ('officers_on_desk', models.IntegerField(blank=True, null= True, default=0)),
+                ('officers_on_jail_duty', models.IntegerField(blank=True, null= True, default=0)),
+                ('officers_on_light_duty', models.IntegerField(blank=True, null= True, default=0)),
+                ('officers_out_sick', models.IntegerField(blank=True, null= True, default=0)),
+                ('officers_in_training', models.IntegerField(blank=True, null= True, default=0)),
+                ('officers_on_vacation', models.IntegerField(blank=True, null= True, default=0)),
+                ('officers_assigned_elswhere', models.IntegerField(blank=True, null= True, default=0)),
+                ('total_citations_issued', models.IntegerField(blank=True, null= True, default=0)),
+                ('total_warnings_issued', models.IntegerField(blank=True, null= True, default=0)),
+                ('total_citizen_contacts', models.IntegerField(blank=True, null= True, default=0)),
+                ('total_traffic_stops', models.IntegerField(blank=True, null= True, default=0)),
+                ('total_arrest_made', models.IntegerField(blank=True, null= True, default=0)),
+                ('total_juvenile_contacts', models.IntegerField(blank=True, null= True, default=0))
             ],
         ),
     ]

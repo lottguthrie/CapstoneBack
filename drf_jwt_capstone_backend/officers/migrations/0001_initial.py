@@ -10,30 +10,48 @@ class Migration(migrations.Migration):
     initial = True
 
     dependencies = [
-        ('owners', '0001_initial'),
+        ('supervisors', '0001_initial'),
         migrations.swappable_dependency(settings.AUTH_USER_MODEL),
     ]
 
     operations = [
         migrations.CreateModel(
-            name='EmployeesWorkSchedule',
+            name='Officers',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('date_worked', models.DateField()),
-                ('start_time', models.TimeField()),
-                ('end_time', models.TimeField()),
-                ('area_working', models.ForeignKey(blank=True, null=True, on_delete=django.db.models.deletion.CASCADE, to='owners.joblist', to_field='job_name')),
-                ('labor_code', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to='owners.employeeroles', to_field='labor_code')),
-                ('username', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, to_field='username')),
+                ('username', models.CharField(error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=150, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username')),
+                ('last_name', models.CharField(max_length=20)),
+                ('first_name', models.CharField(max_length=20)),
+                ('middle_name', models.CharField(max_length=20)),
+                ('phone_number', models.IntegerField(blank=True, null= True, default=0)),
+                ('email', models.EmailField(max_length=40, blank=True, null=True)),
+                ('badge_number', models.IntegerField(blank=True, null= True, default=0)),
+                ('officer_id', models.IntegerField(blank=True, null= True, default=0)),
+                ('supervisor_id', models.IntegerField(blank=True, null= True, default=0)),
+                ('is_active', models.BooleanField(blank=False, null=True)),
+                ('is_supervisor', models.BooleanField(blank=False, null=True)) 
             ],
         ),
+    
         migrations.CreateModel(
-            name='Employees',
+            name='DailyReport',
             fields=[
-                ('id', models.BigAutoField(auto_created=True, primary_key=True, serialize=False, verbose_name='ID')),
-                ('vacation_start_date', models.DateField(blank=True, null=True)),
-                ('vacation_end_date', models.DateField(blank=True, null=True)),
-                ('username', models.ForeignKey(on_delete=django.db.models.deletion.CASCADE, to=settings.AUTH_USER_MODEL, to_field='username')),
+                ('username', models.CharField(error_messages={'unique': 'A user with that username already exists.'}, help_text='Required. 150 characters or fewer. Letters, digits and @/./+/-/_ only.', max_length=150, unique=True, validators=[django.contrib.auth.validators.UnicodeUsernameValidator()], verbose_name='username')),
+                ('report_id', models.IntegerField(blank=True, null= True, default=0)),
+                ('officer_id', models.IntegerField(blank=True, null= True, default=0)),
+                ('date', models.DateField(auto_now_add=False)),
+                ('calls_for_service', models.IntegerField(blank=True, null= True, default=0)),
+                ('reports', models.IntegerField(blank=True, null= True, default=0)),
+                ('supplements', models.IntegerField(blank=True, null= True, default=0)),
+                ('citations_issued', models.IntegerField(blank=True, null= True, default=0)),
+                ('warnings_issued', models.IntegerField(blank=True, null= True, default=0)),
+                ('traffic_stops', models.IntegerField(blank=True, null= True, default=0)),
+                ('citizen_contacts', models.IntegerField(blank=True, null= True, default=0)),
+                ('juvenile_contacts', models.IntegerField(blank=True, null= True, default=0)),
+                ('assigned_area', models.CharField(max_length=20, blank=True, null= True)),
+                ('assigned_vehicle', models.IntegerField(blank=True, null= True, default=0)),
+                ('miles_driven', models.IntegerField(blank=True, null= True, default=0)),
+                ('hours_worked', models.IntegerField(blank=True, null= True, default=0)),
+                ('case_numbers', models.CharField(max_length=20, blank=True, null= True))
             ],
         ),
     ]
